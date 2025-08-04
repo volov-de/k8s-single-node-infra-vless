@@ -144,7 +144,24 @@ sudo ./k8s/auto-k8s-smart-reboot.sh
 
 ## VPN конфигурация
 
+### Автоматическая генерация XRAY-конфига
+
+Для повышения безопасности и удобства, все ключевые параметры XRAY (UUID, приватный ключ, короткий id, DNS) генерируются автоматически при запуске скрипта:
+
+```bash
+cd k8s/xray
+chmod +x generate-xray-config.sh
+./generate-xray-config.sh <dns_address>
+```
+
+Параметры сохраняются в файл `xray-params.env`, а итоговый конфиг для деплоя создается как `xray-configmap.generated.yaml`.
+Скрипт также выводит готовую ссылку для подключения к VPN.
+
+**Для деплоя используйте файл xray-configmap.generated.yaml**
+
+
 ### XRay Client Config (для подключения)
+Параметры для подключения берите из вывода скрипта или файла `xray-params.env`.
 
 ```json
 {
