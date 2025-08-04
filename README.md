@@ -18,8 +18,12 @@
 ```
 k8s-single-node-infra-vless/
 ├── k8s/
-│   ├── xray/                    # VPN компоненты
-│   │   ├── xray-configmap.yaml
+│   ├── xray/                    # VPN компоненты и автоматизация
+│   │   ├── xray-configmap.yaml              # Шаблон XRAY-конфига
+│   │   ├── xray-configmap.generated.yaml    # Итоговый XRAY-конфиг для деплоя
+│   │   ├── xray-params.env                  # Сгенерированные параметры XRAY
+│   │   ├── xray-params.env.example          # Пример env-файла
+│   │   ├── generate-xray-config.sh          # Скрипт генерации параметров и конфига
 │   │   ├── xray-deployment.yaml
 │   │   └── xray-service.yaml
 │   ├── nginx/                   # Reverse proxy
@@ -87,31 +91,6 @@ sudo ./k8s/scripts/install.sh
 sudo chmod +x k8s/scripts/deploy.sh
 ./k8s/scripts/deploy.sh
 ```
-
-### 3. Ручная установка
-
-```bash
-# 1. Создать namespace
-kubectl apply -f k8s/namespaces/
-
-# 2. Деплой VPN компонентов
-kubectl apply -f k8s/xray/
-kubectl apply -f k8s/nginx/
-
-# 3. Деплой мониторинга
-helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-helm install kube-prometheus prometheus-community/kube-prometheus-stack \
-  -n monitoring --create-namespace \
-  -f k8s/monitoring-light.yaml
-
-# 4. Настройка systemd сервиса
-sudo cp k8s/systemd/k8s-uncordon.service /etc/systemd/system/
-sudo cp k8s/k8s-uncordon.sh /usr/local/bin/
-sudo chmod +x /usr/local/bin/k8s-uncordon.sh
-sudo systemctl daemon-reload
-sudo systemctl enable k8s-uncordon.service
-```
-
 ---
 
 ## Мониторинг и управление
