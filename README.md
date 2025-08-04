@@ -18,8 +18,12 @@
 ```
 k8s-single-node-infra-vless/
 ├── k8s/
-│   ├── xray/                    # VPN компоненты
-│   │   ├── xray-configmap.yaml
+│   ├── xray/                    # VPN компоненты и автоматизация
+│   │   ├── xray-configmap.yaml              # Шаблон XRAY-конфига
+│   │   ├── xray-configmap.generated.yaml    # Итоговый XRAY-конфиг для деплоя
+│   │   ├── xray-params.env                  # Сгенерированные параметры XRAY
+│   │   ├── xray-params.env.example          # Пример env-файла
+│   │   ├── generate-xray-config.sh          # Скрипт генерации параметров и конфига
 │   │   ├── xray-deployment.yaml
 │   │   └── xray-service.yaml
 │   ├── nginx/                   # Reverse proxy
