@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: xray-config
+  namespace: vpn
+data:
+  config.json: |
+    {
+      "log": {
+        "loglevel": "warning"
+      },
+      "dns": {
+        "servers": [
+          {
+            "address": "tls://ee1e197c.d.adguard-dns.com"
+          }
+        ]
+      },
+      "inbounds": [
+        {
+          "port": 443,
+          "protocol": "vless",
+          "settings": {
+            "clients": [
+              {
+                "id": "c7b52032-1694-40ee-9b3d-3b1667520944",
+                "flow": "xtls-rprx-vision"
+              }
+            ],
+            "decryption": "none"
+          },
+          "streamSettings": {
+            "network": "tcp",
+            "security": "reality",
+            "realitySettings": {
+              "show": false,
+              "dest": "www.google.com:443",
+              "xver": 0,
+              "serverNames": [ "www.google.com" ],
+              "privateKey": "cM4_ApqKwF1Dy-jfBJr8Lo5oj8CPLT7Dg61cMxnQwkE",
+              "shortIds": [ "22334455" ]
+            }
+          }
+        }
+      ],
+      "outbounds": [
+        {
+          "protocol": "freedom",
+          "settings": {}
+        }
+      ]
+    } 

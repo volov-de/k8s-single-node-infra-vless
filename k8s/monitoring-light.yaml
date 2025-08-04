@@ -1,0 +1,47 @@
+# Лёгкая версия kube-prometheus-stack с сохранением стандартных дашбордов K8S
+
+# Grafana включена, все дефолтные дашборды будут!
+grafana:
+  enabled: true
+
+# Отключаем alertmanager для экономии ресурсов
+alertmanager:
+  enabled: false
+
+# Prometheus — ограничим хранение и память
+prometheus:
+  prometheusSpec:
+    retention: 2d       # история только 2 дня, чтобы не грузить диск/ram
+    scrapeInterval: 30s
+    resources:
+      requests:
+        memory: 256Mi
+      limits:
+        memory: 550Mi
+
+# Включаем exporters только самые необходимые для дашбордов:
+kubeControllerManager:
+  enabled: false
+kubeScheduler:
+  enabled: false
+kubeProxy:
+  enabled: false
+coreDns:
+  enabled: false
+kubeEtcd:
+  enabled: false
+
+nodeExporter:
+  resources:
+    requests:
+      memory: 20Mi
+    limits:
+      memory: 50Mi
+
+# Немного ускорим scrape, чтобы графики были плавнее
+prometheus-node-exporter:
+  resources:
+    requests:
+      memory: 20Mi
+    limits:
+      memory: 50Mi

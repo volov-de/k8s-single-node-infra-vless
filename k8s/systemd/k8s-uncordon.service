@@ -1,0 +1,14 @@
+[Unit]
+Description=Kubernetes Node Uncordon Service
+After=network.target kubelet.service
+Wants=kubelet.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/k8s-uncordon.sh
+RemainAfterExit=yes
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target 
