@@ -102,6 +102,7 @@ sudo chmod +x k8s/scripts/deploy.sh
 sudo chmod +x k8s/scripts/health-check.sh
 ./k8s/scripts/health-check.sh
 ```
+![k8s](screenshots/k8s.png)
 
 ### Резервное копирование
 
@@ -161,7 +162,7 @@ chmod +x generate-xray-config.sh
   "flow": "xtls-rprx-vision"
 }
 ```
-
+![xray](screenshots/xray.png)
 ---
 
 ## Доступ к сервисам
@@ -176,6 +177,9 @@ chmod +x generate-xray-config.sh
 - Username: `admin`
 - Password: `prom-operator`
 
+![Grafana](screenshots/grafana1.png)
+
+![Grafana](screenshots/grafana2.png)
 ---
 
 ## Безопасность
